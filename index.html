@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在线学生管理</title>
+    <script src="./js/vue.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <div id="cracy">
+        <header>
+            <h1>学生管理系统</h1>
+            <span id="current" v-if="currentUser != ''">欢迎你，{{currentUser}}</span>
+            <select v-model="sm">
+                <option value="3">学生列表</option>
+                <option value="1">搜索学生</option>
+                <option value="2">查询成绩</option>
+            </select>
+        </header>
+        <section id="container">
+            <div id="searchStudent" v-if="sm == 2 || sm == 1" class="Absolute_Center">
+                <div>
+                    <span>{{studentNotice}}</span>
+                    <input type="text" v-model="stdNumber">
+                </div>
+                <div v-if="sm == 2">
+                    <span>课程编号(可选)</span>
+                    <input type="text" v-model="cuNumber">
+                </div>
+                <button v-on:click="query">查询</button>
+            </div>
+
+            <div id="showStudent" v-if="sm != 2 && sm != 1">
+                <table>
+                    <tr v-if="sm == 3" v-for="stdItem in stdList">
+                        <td>{{stdItem.ID}}</td>
+                        <td>{{stdItem.name}}</td>
+                    </tr>
+                    <tr v-if="sm == 4" v-for="(value, key, index) in stdIfmt" :key="index">
+                        <td >{{key}}</td>
+                        <td>{{value}}</td>
+                    </tr>
+                </table>
+                <span v-if="sm == 5" id="gd" class="Absolute_Center">{{gradeNotice}}：{{grade}}</span>
+            </div>
+        </section>
+        <section id="logIn" class="Absolute_Center" v-if="sm == 6">
+            <h1>登录</h1>
+            <input type="text" placeholder="请输入用户名" v-model="user">
+            <input type="password" placeholder="请输入密码" v-model="password">
+            <button v-on:click="log_in">登录</button>
+        </section>
+    </div>
+
+
+    <script src="./js/index.js"></script>
+</body>
+</html>
